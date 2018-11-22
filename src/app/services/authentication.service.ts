@@ -2,8 +2,10 @@ import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { BehaviorSubject } from 'rxjs';
+import { UsersModel } from '../model';
 
 const TOKEN_KEY = 'auth-token';
+const user = 'user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +21,15 @@ export class AuthenticationService {
    }
 
    checkToken(){
-     this.storage.get(TOKEN_KEY).then(res => {
+     this.storage.get(user).then(res => {
        if(res){
          this.authenticationState.next(true);
        }
      })
    }
    
-   login(){
-     return this.storage.set(TOKEN_KEY, 'Bearer 1234567').then(() => {
+   login(details: UsersModel){
+     return this.storage.set(user, details).then(() => {
       this.authenticationState.next(true);
      });
    }
