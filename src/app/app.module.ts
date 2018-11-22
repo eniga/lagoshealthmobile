@@ -11,6 +11,12 @@ import { AppComponent } from './app.component';
 import { IonicStorageModule} from '@ionic/storage';
 
 import { HttpClientModule } from '@angular/common/http';
+import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTooltipModule, MatCardModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +26,17 @@ import { HttpClientModule } from '@angular/common/http';
     IonicModule.forRoot(), 
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    HttpClientModule
+    FormsModule,
+    HttpClientModule,
+    MatInputModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    BrowserAnimationsModule,
+    MatGridListModule,
+    MatCardModule
   ],
   providers: [
     StatusBar,
