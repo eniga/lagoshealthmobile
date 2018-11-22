@@ -10,8 +10,7 @@ const routes: Routes = [
     path: 'members',
     canActivate: [AuthGuardService],
     loadChildren: './members/member-routing.module#MemberRoutingModule'
-  },
-  { path: 'forgot', loadChildren: './public/forgot/forgot.module#ForgotPageModule' }
+  }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
