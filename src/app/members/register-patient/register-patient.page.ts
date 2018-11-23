@@ -4,11 +4,13 @@ import { Storage } from '@ionic/storage';
 import { NewPatientModel, UsersModel } from 'src/app/model';
 import {HttpService } from 'src/app/services/http-service.service';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-register-patient',
   templateUrl: './register-patient.page.html',
   styleUrls: ['./register-patient.page.scss'],
+  providers: [DatePipe]
 })
 export class RegisterPatientPage implements OnInit {
 userDetails: UsersModel;
@@ -17,6 +19,7 @@ wards: any;
 settlements: any;
 selectedLga: number;
 selectedWard: number;
+today = new Date();
 patient: NewPatientModel = {
   firstName: '',
   middleName: '',
@@ -27,14 +30,14 @@ patient: NewPatientModel = {
   dob: '',
   settlementId: 0,
   insertUserId: 0,
-  insertDate: '2018-03-03',
+  insertDate: '',
   phcId: 0,
   qrCode: ''
 };
 
 
   constructor(private storage: Storage, private httpService: HttpService,
-     private alertCtrl: AlertController, private qrScanner: QRScanner) {
+     private alertCtrl: AlertController, private qrScanner: QRScanner, private datePipe: DatePipe) {
     this.storage.get('user').then((val: UsersModel) => {
       console.log(val);
       this.userDetails = val;
@@ -70,12 +73,17 @@ patient: NewPatientModel = {
   }
 
   AddPatient() {
+    this.patient.insertDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
     this.patient.insertUserId = this.userDetails.insertUserId;
     this.patient.phcId = this.userDetails.phcId;
     console.log(this.patient);
      this.httpService.AddRecord('Patients', this.patient).subscribe((data) => {
         console.log(data);
-        this.presentAlert(data.status, data.statusMessage, 'OK');
+        if (data.status === true) {
+          this.presentAlert('Success', data.statusMessage, 'OK');
+        } else {
+          this.presentAlert('Error', data.statusMessage, 'OK');
+        }
      });
   }
 
