@@ -3,6 +3,7 @@
 
 /** Ionic CSS Variables **/
 :root {
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -74,4 +75,31 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+}
+
+//for qrcode
+#close-scanner-button {
+  display: none;
+}
+
+html.qr-scanner-open {
+
+  ion-app,
+  ion-content {
+      height: 70px !important;
+  }
+
+  ion-content {
+      --overflow: hidden !important;
+  }
+
+  ion-header,
+  ion-footer,
+  ion-content > *:not(#close-scanner-button) {
+      display: none;
+  }
+
+  #close-scanner-button {
+      display: block;
+  }
 }

@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NewPatientModel, UsersModel } from 'src/app/model';
 import {HttpService } from 'src/app/services/http-service.service';
-import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import {QrService} from 'src/app/services/qr.service';
 import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-register-patient',
@@ -20,6 +21,8 @@ settlements: any;
 selectedLga: number;
 selectedWard: number;
 today = new Date();
+private scanSub: any ;
+result: string;
 patient: NewPatientModel = {
   firstName: '',
   middleName: '',
@@ -36,8 +39,8 @@ patient: NewPatientModel = {
 };
 
 
-  constructor(private storage: Storage, private httpService: HttpService,
-     private alertCtrl: AlertController, private qrScanner: QRScanner, private datePipe: DatePipe) {
+  constructor(private storage: Storage, private httpService: HttpService, private qrService: QrService,
+     private alertCtrl: AlertController, private datePipe: DatePipe) {
     this.storage.get('user').then((val: UsersModel) => {
       console.log(val);
       this.userDetails = val;
@@ -73,6 +76,10 @@ patient: NewPatientModel = {
   }
 
   AddPatient() {
+    if (!this.patient.qrCode) {
+      this.presentAlert('Error', 'Please attach a QR Code.', 'OK');
+      return;
+    }
     this.patient.insertDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
     this.patient.insertUserId = this.userDetails.insertUserId;
     this.patient.phcId = this.userDetails.phcId;
@@ -87,24 +94,9 @@ patient: NewPatientModel = {
      });
   }
 
-  scanQR() {
-    this.qrScanner.prepare()
-  .then((status: QRScannerStatus) => {
-     if (status.authorized) {
-       // camera permission was granted
-
-       // start scanning
-       const scanSub = this.qrScanner.scan().subscribe((text: string) => {
-         console.log('Scanned something', text);
-         this.patient.qrCode = text;
-
-         this.qrScanner.hide(); // hide camera preview
-         scanSub.unsubscribe(); // stop scanning
-       });
-
-     }
-  })
-  .catch((e: any) => console.log('Error is', e));
+ scanQR() {
+     this.result = this.qrService.scanQR();
+     this.patient.qrCode = this.result;
   }
 
   async presentAlert(titleText: string, subTitleText: string, buttonText: string) {
@@ -116,4 +108,5 @@ patient: NewPatientModel = {
 
     await alert.present();
   }
+
 }

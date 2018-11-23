@@ -1,5 +1,12 @@
 <ion-header>
-  <ion-toolbar> <ion-title>New Patient</ion-title> </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button [routerLink]="['/members/dashboard']">
+            <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>New Patient</ion-title>
+      </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
@@ -46,8 +53,11 @@
             </select>
         </div>
         <div class="form-group">
-            <label (click)="scanQR()">+ Scan QR Code </label>
-            <input *ngIf="patient.qrCode" type="text" class="form-control" name="qrcode" [(ngModel)]="patient.qrCode"/>
+            <button (click)="scanQR()"><ion-icon name="camera">
+              </ion-icon> Scan QR Code</button>
+            <label *ngIf="patient.qrCode" style="text-align: left;margin-left: 25%;font-weight: bolder;color:blue;">
+              QR Code found!
+            </label>
           </div>
     <div class="modal-footer">
       <div class="left-side">
