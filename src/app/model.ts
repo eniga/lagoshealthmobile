@@ -1,13 +1,9 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 
 @Injectable()
 
-export class appsettings {
-    public static api_url = "https://lagoshealthreminderapi.azurewebsites.net/api/";
-}
-
-export class UsersModel{
+export class UsersModel {
     userId: number;
     username: string;
     password: string;
@@ -42,4 +38,19 @@ export class LoginResponse {
     status: boolean;
     statusMessage: string;
     details: UsersModel;
+}
+
+export class NewPatientModel {
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  phone: string;
+  altPhone: string;
+  email: string;
+  dob: string;
+  settlementId: number;
+  insertUserId: number;
+  insertDate: string;
+  phcId: number;
+  qrCode: string;
 }

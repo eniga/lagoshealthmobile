@@ -5,8 +5,11 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: './dashboard/dashboard.module#DashboardPageModule'
+  },
+  { path: 'patient',
+  loadChildren: './register-patient/register-patient.module#RegisterPatientPageModule'
   }
-]
+];
 
 @NgModule({
   declarations: [],

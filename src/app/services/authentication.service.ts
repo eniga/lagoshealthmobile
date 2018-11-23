@@ -20,27 +20,27 @@ export class AuthenticationService {
     });
    }
 
-   checkToken(){
+   checkToken() {
      this.storage.get(user).then(res => {
-       if(res){
+       if (res) {
          this.authenticationState.next(true);
        }
-     })
+     });
    }
-   
-   login(details: UsersModel){
+
+   login(details: UsersModel) {
      return this.storage.set(user, details).then(() => {
       this.authenticationState.next(true);
      });
    }
 
-   logout(){
+   logout() {
      return this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false);
      });
    }
 
-   isAuthenticated(){
+   isAuthenticated() {
      return this.authenticationState.value;
    }
 }

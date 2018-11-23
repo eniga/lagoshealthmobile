@@ -18,10 +18,10 @@ export class DashboardPage implements OnInit {
     this.storage.get('user').then((val: UsersModel) => {
       console.log(val);
       this.username = val.username;
-    })
+    });
   }
 
-  logout(){
+  logout() {
     this.authService.logout();
   }
 

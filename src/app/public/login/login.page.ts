@@ -19,24 +19,24 @@ export class LoginPage implements OnInit {
   public isPasswordValid: boolean;
 
   constructor(
-    public alertCtrl: AlertController, 
-    private loginService: UserService, 
+    public alertCtrl: AlertController,
+    private loginService: UserService,
     private authService: AuthenticationService
     ) { }
 
   ngOnInit() {
   }
 
-  login(){
-    if(this.username === undefined || this.password === undefined) {
+  login() {
+    if (this.username === undefined || this.password === undefined) {
       this.presentAlert('Error', 'Please enter a username / password', 'OK');
     } else {
-      let data = new LoginUserModel;
+      const data = new LoginUserModel;
       data.username = this.username;
       data.password = this.password;
       this.loginService.login(data).subscribe((res: LoginResponse) => {
         console.log(res);
-        if(res.status){
+        if (res.status) {
           this.authService.login(res.details);
         }
       });
