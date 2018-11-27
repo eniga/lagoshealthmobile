@@ -2,7 +2,7 @@
     <ion-toolbar>
         <ion-buttons slot="start">
           <ion-button [routerLink]="['/members/dashboard']">
-            <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            <ion-icon slot="icon-only" name="arrow-back" style="color:#fff"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-title>New Patient</ion-title>
@@ -51,6 +51,16 @@
               <option disabled="disabled">Select Settlement</option>
               <option *ngFor= "let item of settlements" value="{{item.settlementId}}">{{item.settlement}}</option>
             </select>
+        </div>
+        <div class="form-group">
+          <label>Service Type </label>
+          <select class="form-control" name="serviceTypeId" [(ngModel)]="appointment.serviceTypeId">
+              <option disabled="disabled">Select Service Type</option>
+              <option *ngFor= "let item of serviceTypes" value="{{item.serviceTypeId}}">{{item.serviceTypeName}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+          <label>Appointment Date </label> <input type="date" class="form-control" name="dob" [(ngModel)]="appointment.appointmentDate"/>
         </div>
         <div class="form-group">
             <button (click)="scanQR()"><ion-icon name="camera">

@@ -17,5 +17,4 @@ export class HttpService {
   AddRecord(path, data) {
     return this.http.post<any>(environment.api_url + path, data);
   }
-
 }

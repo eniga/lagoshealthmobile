@@ -1,10 +1,10 @@
-import { AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NewPatientModel, UsersModel } from 'src/app/model';
 import {HttpService } from 'src/app/services/http-service.service';
 import {QrService} from 'src/app/services/qr.service';
 import { DatePipe } from '@angular/common';
+import {BasicService } from 'src/app/services/basic.service';
 
 
 @Component({
@@ -23,6 +23,15 @@ selectedWard: number;
 today = new Date();
 private scanSub: any ;
 result: string;
+serviceTypes: any;
+serviceTypeId: number;
+appointment = {
+  patientId: 0,
+  serviceTypeId: 0,
+  appointmentDate: '',
+  insertUserId: 0,
+  insertDate: ''
+};
 patient: NewPatientModel = {
   firstName: '',
   middleName: '',
@@ -40,7 +49,7 @@ patient: NewPatientModel = {
 
 
   constructor(private storage: Storage, private httpService: HttpService, private qrService: QrService,
-     private alertCtrl: AlertController, private datePipe: DatePipe) {
+     private basicService: BasicService, private datePipe: DatePipe) {
     this.storage.get('user').then((val: UsersModel) => {
       console.log(val);
       this.userDetails = val;
@@ -49,8 +58,8 @@ patient: NewPatientModel = {
    }
 
   ngOnInit() {
-
     this.AllLGA();
+    this.GetServiceTypes();
   }
 
   AllLGA() {
@@ -75,21 +84,44 @@ patient: NewPatientModel = {
       });
   }
 
-  AddPatient() {
-    if (!this.patient.qrCode) {
-      this.presentAlert('Error', 'Please attach a QR Code.', 'OK');
-      return;
+  GetServiceTypes() {
+    this.httpService.GetAllRecords('/ServiceTypes').subscribe((data) => {
+      this.serviceTypes = data;
+    });
+  }
+
+  CreateAppointment() {
+   this.httpService.AddRecord('Appointments', this.appointment).subscribe((data) => {
+    console.log(data);
+    if (data.status === true) {
+      this.basicService.presentAlert('Success', 'Patient and appointment created successfully.', 'OK');
+    } else {
+      this.basicService.presentAlert('Error', data.statusMessage, 'OK');
     }
+ });
+  }
+
+  AddPatient() {
+     if (!this.patient.qrCode) {
+       this.basicService.presentAlert('Error', 'Please attach a QR Code.', 'OK');
+       return;
+     }
     this.patient.insertDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
     this.patient.insertUserId = this.userDetails.insertUserId;
     this.patient.phcId = this.userDetails.phcId;
+    this.basicService.loader();
     console.log(this.patient);
      this.httpService.AddRecord('Patients', this.patient).subscribe((data) => {
         console.log(data);
         if (data.status === true) {
-          this.presentAlert('Success', data.statusMessage, 'OK');
+          // create appointment
+          this.appointment.insertDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
+          this.appointment.insertUserId = this.userDetails.insertUserId;
+          this.appointment.patientId = data.patientId;
+          console.log(this.appointment);
+          this.CreateAppointment();
         } else {
-          this.presentAlert('Error', data.statusMessage, 'OK');
+          this.basicService.presentAlert('Error', data.statusMessage, 'OK');
         }
      });
   }
@@ -98,15 +130,4 @@ patient: NewPatientModel = {
      this.result = this.qrService.scanQR();
      this.patient.qrCode = this.result;
   }
-
-  async presentAlert(titleText: string, subTitleText: string, buttonText: string) {
-    const alert = await this.alertCtrl.create({
-      header: titleText,
-      message: subTitleText,
-      buttons: [buttonText]
-    });
-
-    await alert.present();
-  }
-
 }

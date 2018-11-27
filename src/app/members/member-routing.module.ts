@@ -8,7 +8,9 @@ const routes: Routes = [
   },
   { path: 'patient',
   loadChildren: './register-patient/register-patient.module#RegisterPatientPageModule'
-  }
+  },
+  { path: 'pending-appointment',
+   loadChildren: './pending-appointment/pending-appointment.module#PendingAppointmentPageModule' },
 ];
 
 @NgModule({

@@ -3,7 +3,7 @@ import { Input } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
 import { LoginUserModel, LoginResponse } from 'src/app/model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { AlertController } from '@ionic/angular';
+import { BasicService } from 'src/app/services/basic.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
   public isPasswordValid: boolean;
 
   constructor(
-    public alertCtrl: AlertController,
+    public basicService: BasicService,
     private loginService: UserService,
     private authService: AuthenticationService
     ) { }
@@ -29,11 +29,12 @@ export class LoginPage implements OnInit {
 
   login() {
     if (this.username === undefined || this.password === undefined) {
-      this.presentAlert('Error', 'Please enter a username / password', 'OK');
+      this.basicService.presentAlert('Error', 'Please enter a username / password', 'OK');
     } else {
       const data = new LoginUserModel;
       data.username = this.username;
       data.password = this.password;
+      this.basicService.loader();
       this.loginService.login(data).subscribe((res: LoginResponse) => {
         console.log(res);
         if (res.status) {
@@ -42,15 +43,4 @@ export class LoginPage implements OnInit {
       });
     }
   }
-
-  async presentAlert(titleText: string, subTitleText: string, buttonText: string) {
-    const alert = await this.alertCtrl.create({
-      header: titleText,
-      message: subTitleText,
-      buttons: [buttonText]
-    });
-
-    await alert.present();
-  }
-
 }
