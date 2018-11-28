@@ -15,7 +15,7 @@
     <ul class="grid" style="padding: unset">
         <li class="grid_item span__1 c"><a [routerLink]="['/members/pending-appointment']" class="grid_link"><div class="tile"><img src="assets/img/appointment.png" alt=""><br/><br>Pending Appointments</div></a></li>
         <li class="grid_item span__1 a"><a [routerLink]="['/members/patient']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>New Patient</div></a></li>
-          <li class="grid_item span__1 b"><a href="#" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>Defaulters</div></a></li>
-          <li class="grid_item span__1 d"><a href="#" class="grid_link"><div class="tile"><img src="assets/img/qr-code-scan.png" alt=""><br/><br>Scan Patient Code</div></a></li>
+          <li class="grid_item span__1 b"><a [routerLink]="['/members/defaulters']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>Defaulters</div></a></li>
+          <li class="grid_item span__1 d"><a [routerLink]="['/members/patient-detail']" class="grid_link"><div class="tile"><img src="assets/img/qr-code-scan.png" alt=""><br/><br>Scan Patient Code</div></a></li>
       </ul>
 </ion-content>

@@ -127,7 +127,8 @@ patient: NewPatientModel = {
   }
 
  scanQR() {
-     this.result = this.qrService.scanQR();
-     this.patient.qrCode = this.result;
+  this.qrService.scanQR().then(() => {
+    this.patient.qrCode = this.qrService.text;
+  });
   }
 }

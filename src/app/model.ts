@@ -54,3 +54,19 @@ export class NewPatientModel {
   phcId: number;
   qrCode: string;
 }
+
+export class PatientDetails {
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  phone: string;
+  altPhone: string;
+  email: string;
+  dob: string;
+  settlement: string;
+  ward: number;
+  lga: string;
+  state: number;
+  insertDate: string;
+  qrCode: string;
+}
