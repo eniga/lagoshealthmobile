@@ -53,9 +53,11 @@ export class NewPatientModel {
   insertDate: string;
   phcId: number;
   qrCode: string;
+  houseNumber: string;
 }
 
 export class PatientDetails {
+  patientId: number;
   firstName: string;
   middleName: string;
   lastName: string;
@@ -66,7 +68,24 @@ export class PatientDetails {
   settlement: string;
   ward: number;
   lga: string;
-  state: number;
   insertDate: string;
+  state: number;
   qrCode: string;
 }
+
+export class ServiceType {
+    serviceTypeId: number;
+    serviceTypeName: string;
+    appointments: Appointment[];
+  }
+
+export class Appointment {
+      appointmentId: number;
+      patientAppointmentId: number;
+      patientId: number;
+      patientName: string;
+      phone: string;
+      appointmentDate: string;
+      settlement: string;
+}
+

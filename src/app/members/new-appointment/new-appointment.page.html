@@ -1,0 +1,62 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button [routerLink]="['/members/dashboard']">
+            <ion-icon slot="icon-only" name="arrow-back" style="color:#fff"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Create Appointment</ion-title>
+      </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <button id="close-scanner-button" ion-button color="btn btn-default" (click)="CancelScan()">Cancel</button>
+  <form *ngIf="isGotten">
+      <div class="card">
+        <p><b>Patient's Name: {{details.lastName}}, {{details.firstName}}</b></p>
+          <div class="container" *ngIf="lastAppointment">
+            <p><b>Last Appointment Date:</b> {{lastAppointment.appointmentDate | date : 'dd-MMM-yyyy'}}</p>
+            <p><b>Status:</b> {{lastAppointment.statusDescription}}</p>
+          </div>
+          <div lass="container" *ngIf="!lastAppointment">
+             <p>No previous appointment record for this patient</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Service Type </label>
+          <select class="form-control" name="serviceTypeId" [(ngModel)]="appointment.serviceTypeId" (change)="GetServiceKinds()">
+              <option disabled="disabled">Select Service Type</option>
+              <option *ngFor= "let item of serviceTypes" value="{{item.serviceTypeId}}">{{item.serviceTypeName}}</option>
+            </select>
+        </div>
+        <div class="form-group" *ngIf="value === '1'" id="optionTypeDiv">
+            <label>Option Type </label>
+            <select class="form-control" name="optionType" [(ngModel)]="appointment.optionType">
+                <option disabled="disabled">Select Option Type</option>
+                <option value="Family">Family</option>
+                <option value="Outreach">Outreach</option>
+              </select>
+          </div>
+        <div class="form-group">
+            <label>Service Kind </label>
+            <select class="form-control" name="serviceKindId" [(ngModel)]="appointment.serviceKindId">
+                <option disabled="disabled">Select Service Kind</option>
+                <option *ngFor= "let item of serviceKinds" value="{{item.serviceKindId}}">{{item.serviceKindName}}</option>
+              </select>
+          </div>
+        <div class="form-group">
+          <label>Appointment Date </label> <input type="date" class="form-control" name="dob" [(ngModel)]="appointment.appointmentDate"/>
+        </div>
+    <div class="modal-footer">
+      <div class="left-side">
+        <button class="btn btn-default" type="button" [routerLink]="['/members/dashboard']">Cancel</button>
+      </div>
+      <div class="divider"></div>
+      <div class="right-side">
+        <button class="btn btn-success" type="button" (click)="CreateAppointment()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</ion-content>

@@ -1,21 +1,21 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar id="ion-toolbar-dashboard">
     <ion-buttons slot="start">
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out" style="color:#fff"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Dashboard</ion-title>
-    <!-- <ion-title>Welcome {{ username }}</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-    <h6>Welcome, {{username}}</h6>
+    <p>Welcome, {{username}}</p>
     <ul class="grid" style="padding: unset">
-        <li class="grid_item span__1 c"><a [routerLink]="['/members/pending-appointment']" class="grid_link"><div class="tile"><img src="assets/img/appointment.png" alt=""><br/><br>Pending Appointments</div></a></li>
-        <li class="grid_item span__1 a"><a [routerLink]="['/members/patient']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>New Patient</div></a></li>
+        <li class="grid_item span__1 c"><a [routerLink]="['/members/pending-appointment']" class="grid_link">
+          <div class="tile"><img src="assets/img/appointment.png" alt=""><br/><br>Today Appointments</div></a></li>
+        <li class="grid_item span__1 a"><a [routerLink]="['/members/patient']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>New Client Registration</div></a></li>
           <li class="grid_item span__1 b"><a [routerLink]="['/members/defaulters']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>Defaulters</div></a></li>
-          <li class="grid_item span__1 d"><a [routerLink]="['/members/patient-detail']" class="grid_link"><div class="tile"><img src="assets/img/qr-code-scan.png" alt=""><br/><br>Scan Patient Code</div></a></li>
+          <li class="grid_item span__1 d"><a [routerLink]="['/members/new-appointment']" class="grid_link"><div class="tile"><img src="assets/img/qr-code-scan.png" alt=""><br/><br>Create Appointment</div></a></li>
       </ul>
 </ion-content>

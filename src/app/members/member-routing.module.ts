@@ -13,8 +13,10 @@ const routes: Routes = [
    loadChildren: './pending-appointment/pending-appointment.module#PendingAppointmentPageModule' },
    { path: 'defaulters',
     loadChildren: './defaulters/defaulters.module#DefaultersPageModule' },
-   { path: 'patient-detail',
-    loadChildren: './patient-detail/patient-detail.module#PatientDetailPageModule' },
+    { path: 'new-appointment',
+     loadChildren: './new-appointment/new-appointment.module#NewAppointmentPageModule' },
+     { path: 'appointments',
+      loadChildren: './appointments/appointments.module#AppointmentsPageModule' },
 ];
 
 @NgModule({

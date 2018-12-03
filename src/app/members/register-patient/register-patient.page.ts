@@ -21,17 +21,7 @@ settlements: any;
 selectedLga: number;
 selectedWard: number;
 today = new Date();
-private scanSub: any ;
 result: string;
-serviceTypes: any;
-serviceTypeId: number;
-appointment = {
-  patientId: 0,
-  serviceTypeId: 0,
-  appointmentDate: '',
-  insertUserId: 0,
-  insertDate: ''
-};
 patient: NewPatientModel = {
   firstName: '',
   middleName: '',
@@ -44,7 +34,8 @@ patient: NewPatientModel = {
   insertUserId: 0,
   insertDate: '',
   phcId: 0,
-  qrCode: ''
+  qrCode: '',
+  houseNumber: ''
 };
 
 
@@ -59,7 +50,6 @@ patient: NewPatientModel = {
 
   ngOnInit() {
     this.AllLGA();
-    this.GetServiceTypes();
   }
 
   AllLGA() {
@@ -84,23 +74,6 @@ patient: NewPatientModel = {
       });
   }
 
-  GetServiceTypes() {
-    this.httpService.GetAllRecords('/ServiceTypes').subscribe((data) => {
-      this.serviceTypes = data;
-    });
-  }
-
-  CreateAppointment() {
-   this.httpService.AddRecord('Appointments', this.appointment).subscribe((data) => {
-    console.log(data);
-    if (data.status === true) {
-      this.basicService.presentAlert('Success', 'Patient and appointment created successfully.', 'OK');
-    } else {
-      this.basicService.presentAlert('Error', data.statusMessage, 'OK');
-    }
- });
-  }
-
   AddPatient() {
      if (!this.patient.qrCode) {
        this.basicService.presentAlert('Error', 'Please attach a QR Code.', 'OK');
@@ -114,16 +87,30 @@ patient: NewPatientModel = {
      this.httpService.AddRecord('Patients', this.patient).subscribe((data) => {
         console.log(data);
         if (data.status === true) {
-          // create appointment
-          this.appointment.insertDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
-          this.appointment.insertUserId = this.userDetails.insertUserId;
-          this.appointment.patientId = data.patientId;
-          console.log(this.appointment);
-          this.CreateAppointment();
+          this.Clear();
+          this.basicService.presentAlert('Success', data.statusMessage, 'OK');
         } else {
           this.basicService.presentAlert('Error', data.statusMessage, 'OK');
         }
      });
+  }
+
+  Clear() {
+    this.patient = {
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      phone: '',
+      altPhone: '',
+      email: '',
+      dob: '',
+      settlementId: 0,
+      insertUserId: 0,
+      insertDate: '',
+      phcId: 0,
+      qrCode: '',
+      houseNumber: ''
+    };
   }
 
  scanQR() {

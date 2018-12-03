@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/members/dashboard']">
+        <ion-icon
+          slot="icon-only"
+          name="arrow-back"
+          style="color:#fff"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Today Appointments</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="card" *ngFor="let item of pendingAppointments">
+    <div class="container">
+      <br />
+      <div>
+        <b>
+          {{ item.serviceTypeName }}
+          <button class="numberCircle">{{ item.appointments.length }}</button></b>
+      </div>
+      <br />
+    </div>
+  </div>
+</ion-content>

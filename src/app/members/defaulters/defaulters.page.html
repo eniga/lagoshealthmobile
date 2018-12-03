@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button [routerLink]="['/members/dashboard']">
+          <ion-icon slot="icon-only" name="arrow-back" style="color:#fff"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Defaulters</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding *ngIf="defaulters">
+    <div class="card"  *ngFor="let item of defaulters">
+        <div class="container" (click)="GetDetails(item.serviceTypeId)">
+            <br/>
+          <div><b> {{item.serviceTypeName}} <button class="numberCircle">{{item.appointments.length}}</button></b>
+            <ion-icon *ngIf="item.appointments.length > 0" name="arrow-dropright" style="float:right; color: #006ea0;font-size:20px"></ion-icon></div>
+           <br/>
+        </div>
+      </div>
+</ion-content>
+
