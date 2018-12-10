@@ -14,6 +14,7 @@ export class LoginPage implements OnInit {
 
   public username: string;
   public password: string;
+  mydate = new Date();
 
   public isUsernameValid: boolean;
   public isPasswordValid: boolean;
@@ -36,6 +37,7 @@ export class LoginPage implements OnInit {
       data.password = this.password;
       this.basicService.loader();
       this.loginService.login(data).subscribe((res: LoginResponse) => {
+        this.basicService.loading.dismiss();
         console.log(res);
         if (res.status) {
           this.authService.login(res.details);

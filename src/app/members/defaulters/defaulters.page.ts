@@ -3,7 +3,6 @@ import { Storage } from '@ionic/storage';
 import { UsersModel, ServiceType } from 'src/app/model';
 import {HttpService } from 'src/app/services/http-service.service';
 import {BasicService } from 'src/app/services/basic.service';
-import { CallNumber } from '@ionic-native/call-number/ngx';
 import {NavController} from '@ionic/angular';
 
 @Component({
@@ -18,7 +17,7 @@ appointments: ServiceType;
 count: number;
 
   constructor(private storage: Storage, private httpService: HttpService,
-     private basicService: BasicService, private callNumber: CallNumber ,
+     private basicService: BasicService,
      private navCtrl: NavController) { }
 
   ngOnInit() {
@@ -37,18 +36,13 @@ count: number;
       this.basicService.loader();
       this.httpService.GetAllRecords('Appointments/Defaulters/' + phcId).subscribe((data) => {
         this.defaulters = data;
+        this.basicService.loading.dismiss();
         console.log(this.defaulters);
         if (this.defaulters === undefined) {
           this.basicService.presentAlert('', 'No defaulters to show.', 'OK' );
         }
       });
     });
-}
-
-CallNumber(number) {
-  this.callNumber.callNumber(number, true)
-    .then(res => console.log('Launched dialer!', res))
-    .catch(err => console.log('Error launching dialer', err));
 }
 
 GetDetails(serviceTypeId) {

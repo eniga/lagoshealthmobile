@@ -37,6 +37,7 @@ GetPendingAppointments(phcId) {
   this.basicService.loader();
     this.httpService.GetAllRecords('Appointments/Pending/' + phcId).subscribe((data) => {
       this.pendingAppointments = data;
+      this.basicService.loading.dismiss();
       console.log(this.pendingAppointments);
       resolve(true);
       if (this.pendingAppointments === undefined) {

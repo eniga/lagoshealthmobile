@@ -16,6 +16,8 @@
         <p><b>Patient's Name: {{details.lastName}}, {{details.firstName}}</b></p>
           <div class="container" *ngIf="lastAppointment">
             <p><b>Last Appointment Date:</b> {{lastAppointment.appointmentDate | date : 'dd-MMM-yyyy'}}</p>
+            <p><b>Service Type: {{lastAppointment.serviceTypeName}}</b></p>
+            <p><b>Service Kind: {{lastAppointment.serviceKindName}}</b></p>
             <p><b>Status:</b> {{lastAppointment.statusDescription}}</p>
           </div>
           <div lass="container" *ngIf="!lastAppointment">
@@ -32,19 +34,26 @@
         <div class="form-group" *ngIf="value === '1'" id="optionTypeDiv">
             <label>Option Type </label>
             <select class="form-control" name="optionType" [(ngModel)]="appointment.optionType">
-                <option disabled="disabled">Select Option Type</option>
-                <option value="Family">Family</option>
+                <option value="Family">Facility</option>
                 <option value="Outreach">Outreach</option>
               </select>
           </div>
         <div class="form-group">
             <label>Service Kind </label>
-            <select class="form-control" name="serviceKindId" [(ngModel)]="appointment.serviceKindId">
+            <select class="form-control" name="serviceKindId" [(ngModel)]="appointment.serviceKindId" (change)="CalculateNextAppointmentDate()">
                 <option disabled="disabled">Select Service Kind</option>
                 <option *ngFor= "let item of serviceKinds" value="{{item.serviceKindId}}">{{item.serviceKindName}}</option>
               </select>
           </div>
-        <div class="form-group">
+          <div class="form-group" *ngIf="computeDate">
+              <label id="nextAppointment">Your next appointment date is: {{nextDate | date: 'dd-MMM-yyyy'}}. Is this date okay?</label>
+              <select class="form-control" name="option" [(ngModel)]="option">
+                  <option value="">Select suitable option</option>
+                 <option value="Yes">Yes</option>
+                 <option value="No">No</option>
+                </select>
+            </div>
+        <div class="form-group" *ngIf="option === 'No'">
           <label>Appointment Date </label> <input type="date" class="form-control" name="dob" [(ngModel)]="appointment.appointmentDate"/>
         </div>
     <div class="modal-footer">

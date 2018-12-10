@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar id="ion-toolbar-dashboard">
     <ion-buttons slot="start">
       <ion-button (click)="logout()">
@@ -7,15 +7,18 @@
     </ion-buttons>
     <ion-title>Dashboard</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content padding>
-    <p>Welcome, {{username}}</p>
+<ion-content padding class="dashboard">
+  <p></p>
+
+    <p class="welcome">Welcome, {{username}} <ion-icon (click)="logout()" slot="icon-only" name="log-out" style="color:#fff;float:right"></ion-icon></p>
     <ul class="grid" style="padding: unset">
-        <li class="grid_item span__1 c"><a [routerLink]="['/members/pending-appointment']" class="grid_link">
+        <li class="grid_item span__1"><a [routerLink]="['/members/pending-appointment']" class="grid_link">
           <div class="tile"><img src="assets/img/appointment.png" alt=""><br/><br>Today Appointments</div></a></li>
-        <li class="grid_item span__1 a"><a [routerLink]="['/members/patient']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>New Client Registration</div></a></li>
-          <li class="grid_item span__1 b"><a [routerLink]="['/members/defaulters']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>Defaulters</div></a></li>
-          <li class="grid_item span__1 d"><a [routerLink]="['/members/new-appointment']" class="grid_link"><div class="tile"><img src="assets/img/qr-code-scan.png" alt=""><br/><br>Create Appointment</div></a></li>
+        <li class="grid_item span__1"><a [routerLink]="['/members/patient']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>New Client Registration</div></a></li>
+        <hr class="line">
+          <li class="grid_item span__1"><a [routerLink]="['/members/defaulters']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>Defaulters</div></a></li>
+          <li class="grid_item span__1"><a [routerLink]="['/members/new-appointment']" class="grid_link"><div class="tile"><img src="assets/img/qr-code-scan.png" alt=""><br/><br>Create Appointment</div></a></li>
       </ul>
 </ion-content>

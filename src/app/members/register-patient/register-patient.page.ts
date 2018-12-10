@@ -53,8 +53,10 @@ patient: NewPatientModel = {
   }
 
   AllLGA() {
+    this.basicService.loader();
       this.httpService.GetAllRecords('/LGAs').subscribe((data) => {
         this.lgas = data;
+        this.basicService.loading.dismiss();
         console.log(this.lgas);
       });
   }
@@ -86,6 +88,7 @@ patient: NewPatientModel = {
     console.log(this.patient);
      this.httpService.AddRecord('Patients', this.patient).subscribe((data) => {
         console.log(data);
+        this.basicService.loading.dismiss();
         if (data.status === true) {
           this.Clear();
           this.basicService.presentAlert('Success', data.statusMessage, 'OK');

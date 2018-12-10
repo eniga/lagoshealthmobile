@@ -23,6 +23,9 @@ export class NewAppointmentPage implements OnInit {
   today = new Date();
   AppointmentList: any;
   lastAppointment: any;
+  nextDate = new Date();
+  computeDate = false;
+  option = 'Yes';
   value = '';
   appointment = {
     patientId: 0,
@@ -52,8 +55,10 @@ export class NewAppointmentPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    //  this.getPatientDetails('1541420972590286').then(() => {
+    //   this.isGotten = true;
+    //  });
     //  this.GetServiceTypes();
-    //  this.isGotten = true;
        this.scanQR().then(() => {
          this.isGotten = true;
          this.GetServiceTypes();
@@ -70,20 +75,27 @@ export class NewAppointmentPage implements OnInit {
     GetServiceKinds() {
       this.value = this.appointment.serviceTypeId.toString();
       this.basicService.loader();
-      console.log(this.value);
       this.httpService.GetAllRecords('/ServiceKinds/' + this.appointment.serviceTypeId).subscribe((data) => {
         this.serviceKinds = data;
-        console.log(this.serviceKinds);
+        this.basicService.loading.dismiss();
       });
     }
 
     CreateAppointment() {
+      if (this.appointment.serviceKindId === 0 || this.appointment.serviceTypeId === 0) {
+          this.basicService.presentAlert('', 'Please fill required fields.', 'OK');
+          return false;
+      }
+      if (this.option === 'Yes') {
+         this.appointment.appointmentDate = this.datePipe.transform(this.nextDate, 'yyyy-MM-dd');
+      }
      this.appointment.insertDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
      this.appointment.patientId = this.details.patientId;
      this.appointment.insertUserId = this.userDetails.insertUserId;
      console.log(this.appointment);
      this.basicService.loader();
      this.httpService.AddRecord('Appointments', this.appointment).subscribe((data) => {
+      this.basicService.loading.dismiss();
       console.log(data);
       if (data.status === true) {
         this.clear();
@@ -100,6 +112,7 @@ export class NewAppointmentPage implements OnInit {
           this.basicService.loader();
           this.getPatientDetails(this.qrService.text).then(() => {
             this.GetLastAppointment(this.details.patientId);
+            this.basicService.loading.dismiss();
              resolve(true);
           });
         });
@@ -139,6 +152,7 @@ export class NewAppointmentPage implements OnInit {
       insertDate: '',
       optionType: ''
     };
+    this.computeDate = false;
   }
   GetLastAppointment(patientId) {
     this.httpService
@@ -150,4 +164,29 @@ export class NewAppointmentPage implements OnInit {
           });
   }
 
+
+  CalculateNextAppointmentDate() {
+    const serviceKind = this.serviceKinds.filter(m => m.serviceKindId === +this.appointment.serviceKindId)[0];
+    console.log(serviceKind);
+    if (serviceKind.duration > 0) {
+      this.computeDate = true;
+      if (serviceKind.type.trim() === 'Days') {
+        this.nextDate = new Date();
+        this.nextDate.setDate(this.today.getDate() + serviceKind.duration);
+        console.log(this.nextDate);
+      }
+      if (serviceKind.type.trim() === 'Weeks') {
+        const noInDays = serviceKind.duration * 7; // convert week to days then add the days
+        this.nextDate = new Date();
+        this.nextDate.setDate(this.today.getDate() + noInDays);
+        console.log(this.nextDate);
+      }
+      if (serviceKind.type.trim() === 'Months') {
+        this.nextDate = new Date();
+        this.nextDate.setMonth(this.today.getMonth() + serviceKind.duration);
+        console.log(this.nextDate);
+      }
+    }
+
+  }
 }

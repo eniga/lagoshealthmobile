@@ -35,7 +35,7 @@ export class AuthenticationService {
    }
 
    logout() {
-     return this.storage.remove(TOKEN_KEY).then(() => {
+     return this.storage.remove(user).then(() => {
       this.authenticationState.next(false);
      });
    }

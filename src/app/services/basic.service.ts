@@ -7,6 +7,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 export class BasicService {
   value: any;
   Page: string;
+  loading: any;
 
   constructor(private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
 
@@ -23,17 +24,15 @@ export class BasicService {
   }
 
   async loader() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Processing request...',
-      spinner: 'crescent',
-      duration: 2000
+     this.loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+      spinner: 'crescent'
     });
+    await this.loading.present();
 
-    await loading.present();
-
-    setTimeout(() => {
-      loading.dismiss();
-    }, 2000);
+    // setTimeout(() => {
+    //   loading.dismiss();
+    // }, 2000);
   }
 
 
