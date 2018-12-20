@@ -110,6 +110,11 @@ export class NewAppointmentPage implements OnInit {
       return new Promise((resolve, reject) => {
         this.qrService.scanQR().then(() => {
           this.basicService.loader();
+          if (this.qrService.text === null || this.qrService.text === undefined || this.qrService.text === '') {
+            this.basicService.loading.dismiss();
+            this.basicService.presentAlert('Error', 'No patient record exists for the provided qr code.', 'OK');
+            return false;
+          }
           this.getPatientDetails(this.qrService.text).then(() => {
             this.GetLastAppointment(this.details.patientId);
             this.basicService.loading.dismiss();

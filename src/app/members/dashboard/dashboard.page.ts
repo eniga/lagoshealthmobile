@@ -13,6 +13,7 @@ export class DashboardPage implements OnInit {
   username: string;
   defaulters: any;
   count: number;
+  mydate = new Date();
 
   constructor(private storage: Storage, private authService: AuthenticationService) { }
 

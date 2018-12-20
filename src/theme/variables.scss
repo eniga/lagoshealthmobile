@@ -163,9 +163,9 @@ html.qr-scanner-open {
   .span__1,
   .span__2,
   .span__4{
-    width: 100%;
+    width: 50%;
     .grid_link {
-   	padding-bottom: 100%;
+   	padding-bottom: 120%;
   	}
   }
 }
@@ -261,4 +261,14 @@ html.qr-scanner-open {
 #nextAppointment {
   font-size: smaller;
   font-weight: bold;
+}
+
+.dashBottom {
+  position: fixed;
+    bottom: 0;
+    width: 100%;
+    color:lightgray;
+    text-align: center;
+    padding-right: 20px;
+    padding-bottom: 10px;
 }
