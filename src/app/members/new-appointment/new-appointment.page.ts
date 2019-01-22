@@ -25,8 +25,10 @@ export class NewAppointmentPage implements OnInit {
   lastAppointment: any;
   nextDate = new Date();
   computeDate = false;
+  noAppointment = false;
   option = 'Yes';
   value = '';
+  confirm: string;
   appointment = {
     patientId: 0,
     serviceTypeId: 0,
@@ -57,6 +59,7 @@ export class NewAppointmentPage implements OnInit {
   ionViewWillEnter() {
     //  this.getPatientDetails('1541420972590286').then(() => {
     //   this.isGotten = true;
+    //   this.GetLastAppointment(this.details.patientId);
     //  });
     //  this.GetServiceTypes();
        this.scanQR().then(() => {
@@ -110,6 +113,11 @@ export class NewAppointmentPage implements OnInit {
       return new Promise((resolve, reject) => {
         this.qrService.scanQR().then(() => {
           this.basicService.loader();
+          if (this.qrService.text === null || this.qrService.text === undefined || this.qrService.text === '') {
+            this.basicService.loading.dismiss();
+            this.basicService.presentAlert('Error', 'No patient record exists for the provided qr code.', 'OK');
+            return false;
+          }
           this.getPatientDetails(this.qrService.text).then(() => {
             this.GetLastAppointment(this.details.patientId);
             this.basicService.loading.dismiss();
@@ -160,7 +168,11 @@ export class NewAppointmentPage implements OnInit {
           .subscribe(data => {
             this.AppointmentList = data;
             this.lastAppointment = this.AppointmentList[0];
+            this.lastAppointment.statusId = 1;
             console.log(this.lastAppointment);
+            if (this.lastAppointment === undefined) {
+              this.noAppointment = true;
+            }
           });
   }
 
@@ -188,5 +200,30 @@ export class NewAppointmentPage implements OnInit {
       }
     }
 
+  }
+
+  ConfirmAppointment() {
+    const data = {
+      'appointmentId' : this.lastAppointment.appointmentId,
+      'insertUserId' : this.userDetails.userId
+    };
+    console.log(data);
+    // const c = confirm('You cannot create a new appointment until you confirm the previous one. ' +
+    // 'Would you like to confirm the last appointment?');
+
+    // if (c) {
+      this.basicService.loader();
+      this.httpService.AddRecord('Appointments/Confirm', data).subscribe((res) => {
+        console.log(res);
+        this.basicService.loading.dismiss();
+        if (res.status === true) {
+          this.lastAppointment.statusId = 3;
+        } else {
+          this.basicService.presentAlert('Error', res.statusMessage, 'OK');
+        }
+       });
+    // } else {
+    //   this.basicService.presentAlert('Error', 'You cannot create a new appointment at this time.', 'OK');
+    // }
   }
 }

@@ -87,5 +87,6 @@ export class Appointment {
       phone: string;
       appointmentDate: string;
       settlement: string;
+      contactedBy: number;
 }
 

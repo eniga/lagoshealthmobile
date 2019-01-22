@@ -128,9 +128,9 @@ html.qr-scanner-open {
   // transition: all .2s cubic-bezier(.4,0,.2,1);
   border-radius: 25px;
   text-align: center;
-  top: 15px;
+  top: 1p0x;
   //border: 3px solid #005DBD;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   //margin-left: 15px;
   //color: #005DBD;
 }
@@ -163,9 +163,9 @@ html.qr-scanner-open {
   .span__1,
   .span__2,
   .span__4{
-    width: 100%;
+    width: 50%;
     .grid_link {
-   	padding-bottom: 100%;
+   	padding-bottom: 120%;
   	}
   }
 }
@@ -225,7 +225,6 @@ html.qr-scanner-open {
 .numberCircle {
   border-radius: 50%;
   /* behavior: url(PIE.htc); */ /* remove if you don't care about IE8 */
-
   width: 30px;
   height: 30px;
   padding: 3px;
@@ -235,7 +234,6 @@ html.qr-scanner-open {
   color: #4c8dff;
   text-align: center;
   font-weight:bold;
-  float: right;
   font: 15px Arial, sans-serif;
 }
 
@@ -261,4 +259,14 @@ html.qr-scanner-open {
 #nextAppointment {
   font-size: smaller;
   font-weight: bold;
+}
+
+.dashBottom {
+  position: fixed;
+    bottom: 0;
+    width: 100%;
+    color:lightgray;
+    text-align: center;
+    padding-right: 20px;
+    padding-bottom: 10px;
 }

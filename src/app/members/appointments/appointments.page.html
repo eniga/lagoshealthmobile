@@ -18,8 +18,14 @@
         <p><b>Patient Name:</b> {{item.patientName}}</p>
         <p><b>Appointment Date:</b> {{item.appointmentDate | date: 'dd-MMM-yyyy'}}</p>
         <p><b>Settlement: </b>{{item.settlement}}</p>
+        <p *ngIf = "item.contactedBy !== 0"><b>Contacted:</b> Yes</p>
+        <p *ngIf = "item.contactedBy === 0"><b>Contacted: </b> No </p>
         <p><b>Phone No:</b> {{item.phone}}
-          <ion-icon slot="icon-only" name="call" *ngIf="defaulter" (click)="CallNumber(item.phone)" style="color:forestgreen; font-size:20px; float:right"></ion-icon></p>
+          <span style="float: right">
+          <ion-icon slot="icon-only" name="call" (click)="CallNumber(item.phone)" style="color:forestgreen; font-size:25px; margin-right:17px"></ion-icon>
+          <ion-icon name="checkmark" (click)="ConfirmCall(item)" style="color:forestgreen; font-size:25px;"></ion-icon>   
+        </span>
+        </p>
       </div>
     </div>
   </ion-content>

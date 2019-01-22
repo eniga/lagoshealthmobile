@@ -13,8 +13,10 @@
     <div class="card"  *ngFor="let item of defaulters">
         <div class="container" (click)="GetDetails(item.serviceTypeId)">
             <br/>
-          <div><b> {{item.serviceTypeName}} <button class="numberCircle">{{item.appointments.length}}</button></b>
-            <ion-icon *ngIf="item.appointments.length > 0" name="arrow-dropright" style="float:right; color: #006ea0;font-size:20px"></ion-icon></div>
+          <div><b> {{item.serviceTypeName}} </b><span style="float:right"><button class="numberCircle">{{item.appointments.length}}</button>
+            <ion-icon *ngIf="item.appointments.length > 0" name="arrow-dropright" style="color: #006ea0;font-size:20px"></ion-icon>
+          </span>
+          </div>
            <br/>
         </div>
       </div>

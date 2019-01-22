@@ -15,6 +15,8 @@ export class LoginPage implements OnInit {
   public username: string;
   public password: string;
   mydate = new Date();
+  focus = false;
+  focus1 = false;
 
   public isUsernameValid: boolean;
   public isPasswordValid: boolean;
@@ -41,6 +43,8 @@ export class LoginPage implements OnInit {
         console.log(res);
         if (res.status) {
           this.authService.login(res.details);
+        } else {
+          this.basicService.presentAlert('Error', res.statusMessage, 'OK');
         }
       });
     }

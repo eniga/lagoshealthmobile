@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button [routerLink]="['/members/dashboard']">
+            <ion-icon slot="icon-only" name="arrow-back" style="color:#fff"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Update Patient QRCode</ion-title>
+      </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <button id="close-scanner-button" ion-button color="btn btn-default" (click)="CancelScan()">Cancel</button>
+  <form>
+    <div class="container">
+        <div class="form-group">
+            <label>Enter Phone Number </label> <input type="text" name="phone"  maxlength="11" minlength="11"
+            pattern="[0-9]*" class="form-control" [(ngModel)]="phone" (keypress)="numberOnly($event)"/>
+          </div>
+        <div class="modal-footer">
+            <div class="right-side">
+              <button class="btn btn-success" type="button" (click)="Search()">
+                Search
+              </button>
+            </div>        
+          </div>
+    </div>
+    <div class="container" *ngIf="!patients">
+      <p style="text-align: center"><b>No patients found.</b></p>
+    </div>
+      <div class="card" *ngIf="patients.length > 0">
+          <p><b>Search Result</b></p>
+        <div class="container" *ngFor="let p of patients">        
+            <p><b>Patient's Name: </b> {{p.lastName}}, {{p.firstName}}</p>
+            <p><b>Phone Number: </b>{{p.phone}}</p>
+            <p><button class="btn btn-default" (click)="scanQR(p)">Update QR Code</button></p>
+        </div>
+        </div>  
+  </form>
+</ion-content>

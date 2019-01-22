@@ -17,6 +17,8 @@ const routes: Routes = [
      loadChildren: './new-appointment/new-appointment.module#NewAppointmentPageModule' },
      { path: 'appointments',
       loadChildren: './appointments/appointments.module#AppointmentsPageModule' },
+      { path: 'update-detail',
+      loadChildren: './update-patient-detail/update-patient-detail.module#UpdatePatientDetailPageModule' },
 ];
 
 @NgModule({

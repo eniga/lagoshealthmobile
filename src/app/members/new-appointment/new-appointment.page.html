@@ -13,19 +13,37 @@
     <button id="close-scanner-button" ion-button color="btn btn-default" (click)="CancelScan()">Cancel</button>
   <form *ngIf="isGotten">
       <div class="card">
-        <p><b>Patient's Name: {{details.lastName}}, {{details.firstName}}</b></p>
+        <div class="container">
+            <p><b>Patient's Name: </b> {{details.lastName}}, {{details.firstName}}</p>
+        </div>
           <div class="container" *ngIf="lastAppointment">
             <p><b>Last Appointment Date:</b> {{lastAppointment.appointmentDate | date : 'dd-MMM-yyyy'}}</p>
-            <p><b>Service Type: {{lastAppointment.serviceTypeName}}</b></p>
-            <p><b>Service Kind: {{lastAppointment.serviceKindName}}</b></p>
+            <p><b>Service Type:</b> {{lastAppointment.serviceTypeName}}</p>
+            <p><b>Service Kind:</b> {{lastAppointment.serviceKindName}}</p>
             <p><b>Status:</b> {{lastAppointment.statusDescription}}</p>
+            <div class="right-side" *ngIf="lastAppointment.statusId !== 3">
+              <button class="btn btn-success" type="button" (click)="ConfirmAppointment()">
+                Confirm Appointment
+              </button>
+            </div>
           </div>
-          <div lass="container" *ngIf="!lastAppointment">
+          <div class="container" *ngIf="!lastAppointment">
              <p>No previous appointment record for this patient</p>
           </div>
+          <!-- <div class="container" *ngIf="lastAppointment && lastAppointment.statusId !== 3">
+            <p>Sorry, you cannot create a new appointment until you confirm the previous appointment.</p>
+            <p> Would you like to confirm the last appointment?</p>
+            <div class="form-group">
+                <select class="form-control" name="confirm" [(ngModel)]="confirm" (change)="ConfirmAppointment(lastAppointment.appointmentId)">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+              </div> 
+         </div> -->
         </div>
+        <div *ngIf="(lastAppointment && lastAppointment.statusId === 3) || noAppointment">
         <div class="form-group">
-          <label>Service Type </label>
+          <label>Service Type for Today</label>
           <select class="form-control" name="serviceTypeId" [(ngModel)]="appointment.serviceTypeId" (change)="GetServiceKinds()">
               <option disabled="disabled">Select Service Type</option>
               <option *ngFor= "let item of serviceTypes" value="{{item.serviceTypeId}}">{{item.serviceTypeName}}</option>
@@ -39,7 +57,7 @@
               </select>
           </div>
         <div class="form-group">
-            <label>Service Kind </label>
+            <label>Service Kind for Today</label>
             <select class="form-control" name="serviceKindId" [(ngModel)]="appointment.serviceKindId" (change)="CalculateNextAppointmentDate()">
                 <option disabled="disabled">Select Service Kind</option>
                 <option *ngFor= "let item of serviceKinds" value="{{item.serviceKindId}}">{{item.serviceKindName}}</option>
@@ -66,6 +84,9 @@
           Submit
         </button>
       </div>
+   
+   
     </div>
+  </div>
   </form>
 </ion-content>

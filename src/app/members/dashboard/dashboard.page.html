@@ -10,7 +10,6 @@
 </ion-header> -->
 
 <ion-content padding class="dashboard">
-  <p></p>
 
     <p class="welcome">Welcome, {{username}} <ion-icon (click)="logout()" slot="icon-only" name="log-out" style="color:#fff;float:right"></ion-icon></p>
     <ul class="grid" style="padding: unset">
@@ -20,5 +19,10 @@
         <hr class="line">
           <li class="grid_item span__1"><a [routerLink]="['/members/defaulters']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>Defaulters</div></a></li>
           <li class="grid_item span__1"><a [routerLink]="['/members/new-appointment']" class="grid_link"><div class="tile"><img src="assets/img/qr-code-scan.png" alt=""><br/><br>Create Appointment</div></a></li>
+          <li class="grid_item span__1"><a [routerLink]="['/members/update-detail']" class="grid_link"><div class="tile"><img src="assets/img/patient.png" alt=""><br/><br>Update Patient Code</div></a></li>
       </ul>
+      <div class="dashBottom">
+          <h6><small>{{ mydate | date: 'yyyy' }} Designed by International Electronics Services Ltd. <br/> Lagos, Nigeria with Support from JICA  <img src="assets/img/logo_jica.BMP" width="20px" alt=""/>
+          </small></h6>
+      </div>
 </ion-content>

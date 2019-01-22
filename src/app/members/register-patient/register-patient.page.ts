@@ -52,6 +52,15 @@ patient: NewPatientModel = {
     this.AllLGA();
   }
 
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
+
   AllLGA() {
     this.basicService.loader();
       this.httpService.GetAllRecords('/LGAs').subscribe((data) => {
@@ -77,10 +86,15 @@ patient: NewPatientModel = {
   }
 
   AddPatient() {
-     if (!this.patient.qrCode) {
-       this.basicService.presentAlert('Error', 'Please attach a QR Code.', 'OK');
-       return;
-     }
+    // console.log(this.patient.phone);
+    if (this.patient.phone.toString().length !== 11 ) {
+      this.basicService.presentAlert('Error', 'Phone no is not 11 digits', 'OK');
+      return;
+    }
+    //  if (!this.patient.qrCode) {
+    //    this.basicService.presentAlert('Error', 'Please attach a QR Code.', 'OK');
+    //    return;
+    //  }
     this.patient.insertDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
     this.patient.insertUserId = this.userDetails.insertUserId;
     this.patient.phcId = this.userDetails.phcId;
@@ -114,11 +128,18 @@ patient: NewPatientModel = {
       qrCode: '',
       houseNumber: ''
     };
+    this.selectedLga = 0;
+    this.selectedWard = 0;
   }
 
  scanQR() {
   this.qrService.scanQR().then(() => {
     this.patient.qrCode = this.qrService.text;
   });
+  }
+
+  CancelScan() {
+    this.qrService.closeScanner();
+   // this.navCtrl.navigateForward('/members/dashboard');
   }
 }
