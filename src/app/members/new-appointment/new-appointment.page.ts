@@ -57,7 +57,7 @@ export class NewAppointmentPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    //  this.getPatientDetails('1541420972590286').then(() => {
+    //  this.getPatientDetails('1541438932572878').then(() => {
     //   this.isGotten = true;
     //   this.GetLastAppointment(this.details.patientId);
     //  });
@@ -168,7 +168,6 @@ export class NewAppointmentPage implements OnInit {
           .subscribe(data => {
             this.AppointmentList = data;
             this.lastAppointment = this.AppointmentList[0];
-            this.lastAppointment.statusId = 1;
             console.log(this.lastAppointment);
             if (this.lastAppointment === undefined) {
               this.noAppointment = true;

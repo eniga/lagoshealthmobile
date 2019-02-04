@@ -91,10 +91,10 @@ patient: NewPatientModel = {
       this.basicService.presentAlert('Error', 'Phone no is not 11 digits', 'OK');
       return;
     }
-    //  if (!this.patient.qrCode) {
-    //    this.basicService.presentAlert('Error', 'Please attach a QR Code.', 'OK');
-    //    return;
-    //  }
+     if (!this.patient.qrCode) {
+       this.basicService.presentAlert('Error', 'Please attach a QR Code.', 'OK');
+       return;
+     }
     this.patient.insertDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
     this.patient.insertUserId = this.userDetails.insertUserId;
     this.patient.phcId = this.userDetails.phcId;
